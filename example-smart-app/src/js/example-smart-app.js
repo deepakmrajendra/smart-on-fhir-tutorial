@@ -52,11 +52,6 @@
           var hdl = byCodes('2085-9');
           var ldl = byCodes('2089-1');
 
-          // Add debug logging
-          console.log('Temperature observations:', temperature);
-          console.log('Heart Rate observations:', heartrate);
-          console.log('Glucose observations:', glucose);
-
           var p = defaultPatient();
           p.birthdate = patient.birthDate;
           p.gender = gender;
