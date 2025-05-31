@@ -18,7 +18,11 @@
                         $or: ['http://loinc.org|8302-2', 'http://loinc.org|8462-4',
                               'http://loinc.org|8480-6', 'http://loinc.org|2085-9',
                               'http://loinc.org|2089-1', 'http://loinc.org|55284-4',
-                              'http://loinc.org|29463-7', 'http://loinc.org|39156-5']
+                              'http://loinc.org|29463-7', 'http://loinc.org|39156-5',
+                              'http://loinc.org|8310-5',  // Temperature
+                              'http://loinc.org|8867-4',  // Heart rate
+                              'http://loinc.org|2339-0'   // Glucose
+                             ]
                       }
                     }
                   });
@@ -40,14 +44,18 @@
           var height = byCodes('8302-2');
           var weight = byCodes('29463-7');
           var bmi = byCodes('39156-5');
+          var temperature = byCodes('8310-5');
+          var heartrate = byCodes('8867-4');
+          var glucose = byCodes('2339-0');
           var systolicbp = getBloodPressureValue(byCodes('55284-4'),'8480-6');
           var diastolicbp = getBloodPressureValue(byCodes('55284-4'),'8462-4');
           var hdl = byCodes('2085-9');
           var ldl = byCodes('2089-1');
 
           // Add debug logging
-          console.log('Weight observations:', weight);
-          console.log('BMI observations:', bmi);
+          console.log('Temperature observations:', temperature);
+          console.log('Heart Rate observations:', heartrate);
+          console.log('Glucose observations:', glucose);
 
           var p = defaultPatient();
           p.birthdate = patient.birthDate;
@@ -55,9 +63,11 @@
           p.fname = fname;
           p.lname = lname;
           p.height = getQuantityValueAndUnit(height[0]);
-          // Add weight and BMI processing
           p.weight = getQuantityValueAndUnit(weight[0]);
           p.bmi = getQuantityValueAndUnit(bmi[0]);
+          p.temperature = getQuantityValueAndUnit(temperature[0]);
+          p.heartrate = getQuantityValueAndUnit(heartrate[0]);
+          p.glucose = getQuantityValueAndUnit(glucose[0]);
 
           if (typeof systolicbp != 'undefined')  {
             p.systolicbp = systolicbp;
@@ -91,6 +101,9 @@
       height: {value: ''},
       weight: {value: ''},
       bmi: {value: ''},
+      temperature: {value: ''},
+      heartrate: {value: ''},
+      glucose: {value: ''},
       systolicbp: {value: ''},
       diastolicbp: {value: ''},
       ldl: {value: ''},
@@ -136,6 +149,9 @@
     $('#height').html(p.height);
     $('#weight').html(p.weight);
     $('#bmi').html(p.bmi);
+    $('#temperature').html(p.temperature);
+    $('#heartrate').html(p.heartrate);
+    $('#glucose').html(p.glucose);
     $('#systolicbp').html(p.systolicbp);
     $('#diastolicbp').html(p.diastolicbp);
     $('#ldl').html(p.ldl);
